@@ -9,12 +9,12 @@ function App() {
   const [notes, setNotes] = useState([
     {
       id: "",
-      title: "pop",
+      title: "Number 1",
       text: "loll",
     },
     {
       id: "",
-      title: "poz",
+      title: "Number 2",
       text: "lo4l",
     },
   ]);
