@@ -15,7 +15,8 @@ nav {
   align-items: center;
 }
 .logo-text {
-  font-size: 1.2rem;
+  font-size: 22px;
+  color: black;
 }
 
 .search-area {

@@ -12,6 +12,11 @@ function Sidebar() {
     setIsHovered(false);
   };
 
+  // Hide sidebar on mobile devices
+  if (window.innerWidth < 768) {
+    return null;
+  }
+
   return (
     <div
       className="sidebar"

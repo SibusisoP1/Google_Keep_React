@@ -3,11 +3,23 @@ import { uid } from "uid";
 import "./Form.css";
 
 function Form(props) {
-  const { edit, selectedNote } = props;
+  const { addNote, edit, selectedNote, toggleModal, editNote } = props;
 
-  const [title, setTitle] = useState((edit && selectedNote?.title) || "");
-  const [text, setText] = useState((edit && selectedNote?.text) || "");
+  const [title, setTitle] = useState((edit && selectedNote.title) || "");
+  const [text, setText] = useState((edit && selectedNote.text) || "");
+  const [color, setColor] = useState((edit && selectedNote.color) || "#ffffff");
   const [isActive, setIsActive] = useState(edit);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+
+  const colors = [
+    "#ffffff",
+    "#f28482",
+    "#f4cccc",
+    "#fce5cd",
+    "#f8f7a0",
+    "#d9d2e9",
+    "#a2c4c9",
+  ];
 
   const titleChangeHandler = (e) => setTitle(e.target.value);
 
@@ -16,19 +28,28 @@ function Form(props) {
   const submitFormHandler = (e) => {
     e.preventDefault();
 
-    const note = {
-      id: uid(),
-      title,
-      text,
-    };
+    if (!edit) {
+      const note = {
+        id: uid(),
+        title,
+        text,
+        color,
+      };
 
-    if (note.title !== "" || note.text !== "") {
-      props.addNote(note);
-      setText("");
-      setTitle("");
+      if (note.title !== "" || note.text !== "") {
+        addNote(note);
+      }
+
+      setIsActive(false);
+    } else {
+      toggleModal();
+      editNote(selectedNote.id, { title, text, color });
     }
 
-    setIsActive(false);
+    setText("");
+    setTitle("");
+    setColor("#ffffff");
+    setShowColorPicker(false);
   };
 
   const formClickHandler = () => {
@@ -76,9 +97,50 @@ function Form(props) {
                   <span className="tooltip-text">Collaborator</span>
                 </div>
                 <div className="tooltip">
-                  <span className="material-symbols-outlined hover small-icon">
+                  <span
+                    className="material-symbols-outlined hover small-icon"
+                    onClick={() => setShowColorPicker(!showColorPicker)}
+                    style={{ cursor: "pointer", position: "relative" }}
+                  >
                     palette
                   </span>
+                  {showColorPicker && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: "-150px",
+                        left: "-30px",
+                        display: "flex",
+                        flexWrap: "wrap",
+                        width: "150px",
+                        gap: "8px",
+                        backgroundColor: "white",
+                        padding: "10px",
+                        borderRadius: "8px",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                        zIndex: 1000,
+                      }}
+                    >
+                      {colors.map((c) => (
+                        <div
+                          key={c}
+                          onClick={() => {
+                            setColor(c);
+                            setShowColorPicker(false);
+                          }}
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            backgroundColor: c,
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            border:
+                              color === c ? "3px solid #333" : "1px solid #ddd",
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
                   <span className="tooltip-text">Change Color</span>
                 </div>
                 <div className="tooltip">

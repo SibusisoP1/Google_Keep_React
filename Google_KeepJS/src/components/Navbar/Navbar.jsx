@@ -1,6 +1,8 @@
 import "./Navbar.css";
 
-function Navbar() {
+function Navbar({ isDarkMode, toggleDarkMode }) {
+  const isMobile = window.innerWidth < 768;
+
   return (
     <nav>
       <div className="logo-area">
@@ -26,24 +28,46 @@ function Navbar() {
       </div>
       <div className="nav_footer">
         <div className="settings-area">
+          {!isMobile && (
+            <div className="tooltip">
+              <span className="material-symbols-outlined hover">refresh</span>
+              <span className="tooltip-text">Refresh</span>
+            </div>
+          )}
+          {!isMobile && (
+            <div className="tooltip">
+              <span className="material-symbols-outlined hover">
+                view_agenda
+              </span>
+              <span className="tooltip-text">View List</span>
+            </div>
+          )}
           <div className="tooltip">
-            <span className="material-symbols-outlined hover">refresh</span>
-            <span className="tooltip-text">Refresh</span>
+            <span
+              className="material-symbols-outlined hover"
+              onClick={toggleDarkMode}
+              style={{ cursor: "pointer" }}
+            >
+              {isDarkMode ? "light_mode" : "dark_mode"}
+            </span>
+            <span className="tooltip-text">
+              {isDarkMode ? "Light Mode" : "Dark Mode"}
+            </span>
           </div>
-          <div className="tooltip">
-            <span className="material-symbols-outlined hover">view_agenda</span>
-            <span className="tooltip-text">View List</span>
-          </div>
-          <div className="tooltip">
-            <span className="material-symbols-outlined hover">settings</span>
-            <span className="tooltip-text">Settings</span>
-          </div>
+          {!isMobile && (
+            <div className="tooltip">
+              <span className="material-symbols-outlined hover">settings</span>
+              <span className="tooltip-text">Settings</span>
+            </div>
+          )}
         </div>
         <div className="profile-actions-area">
-          <div className="tooltip">
-            <span className="material-symbols-outlined hover">apps</span>
-            <span className="tooltip-text">Apps</span>
-          </div>
+          {!isMobile && (
+            <div className="tooltip">
+              <span className="material-symbols-outlined hover">apps</span>
+              <span className="tooltip-text">Apps</span>
+            </div>
+          )}
           <div className="tooltip">
             <span className="material-symbols-outlined hover">
               account_circle
