@@ -7,9 +7,8 @@
   flex-direction: column;
   margin-top: 5px;
   color: #5f6368;
-  width: 80px;
   overflow-x: hidden;
-  transition: 0.8s;
+  transition: 0.4s;
   height: 100%;
 }
 .sidebar-hover {

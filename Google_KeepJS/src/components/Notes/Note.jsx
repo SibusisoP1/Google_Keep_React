@@ -1,17 +1,48 @@
+import React, { useState } from "react";
+
 function Note(props) {
-  const { id, title, text } = props;
+  const { id, title, text } = props.note;
+  const { setSelectedNote } = props;
+  const [isHovered, setIsHovered] = useState(false);
 
   const noteClickHandler = () => {
-    alert("Note Clicked");
+    setSelectedNote(props.note);
+    props.toggleModal();
   };
+
+  const onMouseOverHandler = () => {
+    setIsHovered(true);
+  };
+
+  const onMouseOutHandler = () => {
+    setIsHovered(false);
+  };
+
+  const deleteNoteHandler = (e) => {
+    e.stopPropagation();
+    props.deleteNote(id);
+  };
+
   return (
-    <div className="note" id={id} onClick={noteClickHandler}>
-      <span className="material-symbols-outlined check-circle">
-        check_circle
-      </span>
+    <div
+      className="note"
+      id={id}
+      onClick={noteClickHandler}
+      onMouseOver={onMouseOverHandler}
+      onMouseOut={onMouseOutHandler}
+    >
+      {isHovered && (
+        <span className="material-symbols-outlined check-circle">
+          <i className="bi bi-check-circle-fill"></i>
+        </span>
+      )}
       <div className="title">{title}</div>
       <div className="text">{text}</div>
-      <div className="note-footer">
+
+      <div
+        className="note-footer"
+        style={{ visibility: isHovered ? "visible" : "hidden" }}
+      >
         <div className="tooltip">
           <span className="material-symbols-outlined hover small-icon">
             add_alert
@@ -36,7 +67,7 @@ function Note(props) {
           </span>
           <span className="tooltip-text">Add Image</span>
         </div>
-        <div className="tooltip archive">
+        <div className="tooltip archive" onClick={deleteNoteHandler}>
           <span className="material-symbols-outlined hover small-icon">
             archive
           </span>

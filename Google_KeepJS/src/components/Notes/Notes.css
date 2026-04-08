@@ -36,17 +36,15 @@
   display: flex;
   padding: 0;
   justify-content: center;
-  visibility: hidden;
 }
 
 .note-footer .material-symbols-outlined {
   color: #5f6368;
-  font-size: 0.9rem;
+  font-size: 20px;
 }
 
 .note .check-circle {
   position: absolute;
   top: -20px;
   left: -20px;
-  visibility: hidden;
 }

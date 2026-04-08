@@ -1,8 +1,24 @@
 import "./Sidebar.css";
+import React, { useState } from "react";
 
 function Sidebar() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const onMouseOverHandler = () => {
+    setIsHovered(true);
+  };
+
+  const onMouseOutHandler = () => {
+    setIsHovered(false);
+  };
+
   return (
-    <div className="sidebar">
+    <div
+      className="sidebar"
+      onMouseOver={onMouseOverHandler}
+      onMouseOut={onMouseOutHandler}
+      style={{ width: isHovered ? "250px" : "80px" }}
+    >
       <div className="sidebar-item active-item">
         <span className="material-symbols-outlined hover active">
           lightbulb

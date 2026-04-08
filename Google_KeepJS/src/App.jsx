@@ -7,17 +7,19 @@ import React, { useState } from "react";
 
 function App() {
   const [notes, setNotes] = useState([
-    {
-      id: "",
-      title: "Number 1",
-      text: "loll",
-    },
-    {
-      id: "",
-      title: "Number 2",
-      text: "lo4l",
-    },
+    // {
+    //   id: "12345",
+    //   title: "Number 1",
+    //   text: "loll",
+    // },
+    // {
+    //   id: "67890",
+    //   title: "Number 2",
+    //   text: "lo4l",
+    // },
   ]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState({});
 
   const addNote = (note) => {
     setNotes((prevNotes) => {
@@ -25,13 +27,34 @@ function App() {
     });
   };
 
+  const deleteNote = (id) => {
+    setNotes((prevNotes) => {
+      return prevNotes.filter((note) => id !== note.id);
+    });
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen((prev) => !prev);
+  };
+
   return (
     <>
       <Navbar />
       <Sidebar />
       <Form addNote={addNote} />
-      <Notes notes={notes} />
-      <Modal />
+      <Notes
+        notes={notes}
+        deleteNote={deleteNote}
+        toggleModal={toggleModal}
+        setSelectedNote={setSelectedNote}
+      />
+      {isModalOpen && (
+        <Modal
+          isModalOpen={isModalOpen}
+          notes={notes}
+          selectedNote={selectedNote}
+        />
+      )}
     </>
   );
 }
